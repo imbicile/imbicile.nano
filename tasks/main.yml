@@ -1,0 +1,41 @@
+---
+# tasks file for imbicile.nano
+- name: install nano
+  apt:
+    pkg:
+      - nano
+    update_cache: yes
+    state: latest
+  become: true
+
+- name: download nano-highlight
+  get_url:
+    url: "https://github.com/serialhex/nano-highlight/archive/master.zip"
+    dest: "/tmp/nano-highlight.zip"
+  register: _download_archive
+  until: _download_archive is succeeded
+  retries: 5
+  delay: 2
+  delegate_to: localhost
+  check_mode: false
+  become: false
+
+- name: unpack nano-highlight
+  unarchive:
+    src: "/tmp/nano-highlight.zip"
+    dest: "/tmp"
+    mode: 0755
+  delegate_to: localhost
+  check_mode: false
+  become: false
+
+- name: copy nanorc
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/share/nano"
+    mode: 0644
+    owner: root
+    group: root
+  with_fileglob:
+    - /tmp/nano-highlight-master/*.nanorc
+  become: true
