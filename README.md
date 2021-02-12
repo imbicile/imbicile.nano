@@ -10,7 +10,7 @@ Example Playbook
     - hosts: 
       - all
       roles:
-        - { role: imbicile.nano ,become: false }
+        - { role: imbicile.nano ,become: true }
 
 Author Information
 ------------------
