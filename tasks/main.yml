@@ -6,11 +6,10 @@
       - nano
     update_cache: yes
     state: latest
-  become: true
 
 - name: download nano-highlight
   get_url:
-    url: "https://github.com/serialhex/nano-highlight/archive/master.zip"
+    url: "https://github.com/imbicile/nano-highlight/archive/refs/heads/master.zip"
     dest: "/tmp/nano-highlight.zip"
   register: _download_archive
   until: _download_archive is succeeded
@@ -18,7 +17,6 @@
   delay: 2
   delegate_to: localhost
   check_mode: false
-  become: false
 
 - name: unpack nano-highlight
   unarchive:
@@ -27,7 +25,6 @@
     mode: 0755
   delegate_to: localhost
   check_mode: false
-  become: false
 
 - name: copy nanorc
   copy:
@@ -38,4 +35,3 @@
     group: root
   with_fileglob:
     - /tmp/nano-highlight-master/*.nanorc
-  become: true
