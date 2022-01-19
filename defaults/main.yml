@@ -1,2 +1,6 @@
 ---
 # defaults file for imbicile.nano
+
+# FORK
+# https://github.com/scopatz/nanorc
+git_repo: "https://github.com/imbicile/nanorc/archive/refs/heads/master.zip"
